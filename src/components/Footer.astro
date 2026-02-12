@@ -1,0 +1,53 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="site-footer__inner container">
+		<p class="site-footer__copy">
+			&copy; {year} Beyond Vibe Coding
+		</p>
+		<nav class="site-footer__links">
+			<a href="https://youtube.com/@BeyondVibeCoding" target="_blank" rel="noopener">YouTube</a>
+		</nav>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		border-top: 1px solid var(--border);
+		margin-top: 4rem;
+		padding: 2rem 0;
+	}
+
+	.site-footer__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.site-footer__copy {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+
+	.site-footer__links {
+		display: flex;
+		gap: 1.25rem;
+	}
+
+	.site-footer__links a {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+
+	.site-footer__links a:hover {
+		color: var(--accent);
+	}
+</style>

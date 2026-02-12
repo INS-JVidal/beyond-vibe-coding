@@ -1,17 +1,80 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
 
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Beyond Vibe Coding — Desarrollo con IA para los que prefieren pensar">
+	<section class="hero container--narrow">
+		<h1 class="hero__title">Beyond <span class="hero__slash">/</span> Vibe Coding</h1>
+		<p class="hero__lead">Desarrollo con IA para los que prefieren pensar.</p>
+	</section>
+
+	<section class="latest container--narrow">
+		<h2 class="latest__heading">Publicaciones recientes</h2>
+		<div class="latest__grid">
+			{posts.map((post) => (
+				<PostCard
+					title={post.data.title}
+					description={post.data.description}
+					pubDate={post.data.pubDate}
+					slug={post.id}
+					category={post.data.category}
+					readingTime={post.data.readingTime}
+					lang={post.data.lang}
+				/>
+			))}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.hero {
+		padding: 4rem 0 3rem;
+		text-align: center;
+	}
+
+	.hero__title {
+		font-family: var(--font-heading);
+		font-size: clamp(2.5rem, 7vw, 3.5rem);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.1;
+	}
+
+	.hero__slash {
+		color: var(--accent);
+	}
+
+	.hero__lead {
+		font-family: var(--font-body);
+		font-size: 1.25rem;
+		color: var(--text-secondary);
+		margin-top: 1rem;
+	}
+
+	.latest {
+		padding-bottom: 4rem;
+	}
+
+	.latest__heading {
+		font-family: var(--font-heading);
+		font-size: 1rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-muted);
+		margin-bottom: 1.5rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.latest__grid {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+</style>
