@@ -1,0 +1,117 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	author?: string;
+	tags?: string[];
+	category?: string;
+	readingTime?: number;
+	lang?: string;
+}
+
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	author = 'Beyond Vibe Coding',
+	tags = [],
+	category,
+	readingTime,
+	lang = 'es',
+} = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString(lang, {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+
+const formattedUpdate = updatedDate?.toLocaleDateString(lang, {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} — Beyond Vibe Coding`} description={description} lang={lang}>
+	<article class="post container--narrow">
+		<header class="post__header">
+			{category && <span class="tag">{category}</span>}
+			<h1 class="post__title">{title}</h1>
+			<p class="post__meta">
+				<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+				{readingTime && <span>&middot; {readingTime} min de lectura</span>}
+			</p>
+			{updatedDate && (
+				<p class="post__updated">Actualizado el {formattedUpdate}</p>
+			)}
+		</header>
+
+		<div class="prose">
+			<slot />
+		</div>
+
+		{tags.length > 0 && (
+			<footer class="post__tags">
+				{tags.map((t) => (
+					<span class="tag">{t}</span>
+				))}
+			</footer>
+		)}
+	</article>
+</BaseLayout>
+
+<style>
+	.post {
+		padding-top: 3rem;
+		padding-bottom: 4rem;
+	}
+
+	.post__header {
+		margin-bottom: 2.5rem;
+		padding-bottom: 2rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.post__title {
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 2.75rem);
+		font-weight: 700;
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		margin-top: 0.75rem;
+		color: var(--text);
+	}
+
+	.post__meta {
+		font-family: var(--font-ui);
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-top: 1rem;
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.post__updated {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		margin-top: 0.25rem;
+		font-style: italic;
+	}
+
+	.post__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border);
+	}
+</style>

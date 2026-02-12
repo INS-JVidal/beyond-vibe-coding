@@ -1,0 +1,87 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	slug: string;
+	category?: string;
+	readingTime?: number;
+	lang?: string;
+}
+
+const {
+	title,
+	description,
+	pubDate,
+	slug,
+	category,
+	readingTime,
+	lang = 'es',
+} = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString(lang, {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<article class="post-card">
+	<a href={`/blog/${slug}`} class="post-card__link">
+		{category && <span class="tag">{category}</span>}
+		<h3 class="post-card__title">{title}</h3>
+		<p class="post-card__desc">{description}</p>
+		<p class="post-card__meta">
+			<time datetime={pubDate.toISOString()}>{formattedDate}</time>
+			{readingTime && <span>&middot; {readingTime} min</span>}
+		</p>
+	</a>
+</article>
+
+<style>
+	.post-card {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		transition: box-shadow 0.2s, border-color 0.2s;
+	}
+
+	.post-card:hover {
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+		border-color: var(--accent);
+	}
+
+	.post-card__link {
+		display: block;
+		padding: 1.75rem 2rem;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.post-card__title {
+		font-family: var(--font-heading);
+		font-size: 1.5rem;
+		font-weight: 700;
+		line-height: 1.25;
+		letter-spacing: -0.01em;
+		color: var(--text);
+		margin-top: 0.5rem;
+	}
+
+	.post-card__desc {
+		font-family: var(--font-body);
+		font-size: 1rem;
+		line-height: 1.6;
+		color: var(--text-secondary);
+		margin-top: 0.75rem;
+	}
+
+	.post-card__meta {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		margin-top: 1rem;
+		display: flex;
+		gap: 0.4rem;
+	}
+</style>
