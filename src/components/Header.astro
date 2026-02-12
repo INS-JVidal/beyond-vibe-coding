@@ -1,0 +1,76 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+	{ href: '/', label: 'Inicio' },
+	{ href: '/blog', label: 'Blog' },
+];
+---
+
+<header class="site-header">
+	<div class="site-header__inner container">
+		<a href="/" class="site-header__logo">
+			Beyond <span class="site-header__slash">/</span> Vibe Coding
+		</a>
+		<nav class="site-header__nav" aria-label="Principal">
+			{links.map(({ href, label }) => (
+				<a
+					href={href}
+					class:list={['site-header__link', { active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }]}
+				>
+					{label}
+				</a>
+			))}
+		</nav>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		border-bottom: 1px solid var(--border);
+		background: var(--bg);
+		position: sticky;
+		top: 0;
+		z-index: 100;
+	}
+
+	.site-header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 3.5rem;
+	}
+
+	.site-header__logo {
+		font-family: var(--font-heading);
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--text);
+		text-decoration: none;
+		letter-spacing: -0.01em;
+	}
+
+	.site-header__slash {
+		color: var(--accent);
+		margin: 0 0.05em;
+	}
+
+	.site-header__nav {
+		display: flex;
+		gap: 1.5rem;
+	}
+
+	.site-header__link {
+		font-family: var(--font-ui);
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--text-muted);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+
+	.site-header__link:hover,
+	.site-header__link.active {
+		color: var(--text);
+	}
+</style>
