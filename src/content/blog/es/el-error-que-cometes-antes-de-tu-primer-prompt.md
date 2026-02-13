@@ -3,7 +3,7 @@ title: "El error que cometes antes de tu primer prompt"
 description: "Hay dos formas de equivocarte con la IA al programar: dejar que decida demasiado cuando no sabes nada, y dejar que ignore todo lo que tú sí sabes. Ambas nacen del mismo problema."
 pubDate: 2025-02-12
 updatedDate: 2025-02-12
-author: "Beyond Vibe Coding"
+author: "Prompt Lúcido"
 tags: ["ia", "desarrollo", "greenfield", "brownfield", "ingeniería de software"]
 category: "fundamentos"
 draft: false
@@ -80,4 +80,4 @@ Las habilidades "meta" — planificar, evaluar, decidir — son ahora más valio
 
 ---
 
-*Este artículo es una adaptación del primer episodio de [Beyond Vibe Coding](https://youtube.com/@BeyondVibeCoding), un canal sobre desarrollo con IA para los que prefieren pensar. Nuevo vídeo cada semana.*
+*Este artículo es una adaptación del primer episodio de [Prompt Lúcido](https://youtube.com/@BeyondVibeCoding), un canal sobre desarrollo con IA para programadores conscientes. Nuevo vídeo cada semana.*

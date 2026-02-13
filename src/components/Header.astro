@@ -10,7 +10,7 @@ const links = [
 <header class="site-header">
 	<div class="site-header__inner container">
 		<a href="/" class="site-header__logo">
-			Beyond <span class="site-header__slash">/</span> Vibe Coding
+			Prompt L<span class="site-header__accent">ú</span>cido
 		</a>
 		<nav class="site-header__nav" aria-label="Principal">
 			{links.map(({ href, label }) => (
@@ -50,9 +50,10 @@ const links = [
 		letter-spacing: -0.01em;
 	}
 
-	.site-header__slash {
+	.site-header__accent {
+		font-family: var(--font-body);
 		color: var(--accent);
-		margin: 0 0.05em;
+		font-style: italic;
 	}
 
 	.site-header__nav {

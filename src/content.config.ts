@@ -8,7 +8,7 @@ const blog = defineCollection({
 		description: z.string(),
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
-		author: z.string().default('Beyond Vibe Coding'),
+		author: z.string().default('Prompt Lúcido'),
 		tags: z.array(z.string()).default([]),
 		category: z.string().optional(),
 		draft: z.boolean().default(false),
