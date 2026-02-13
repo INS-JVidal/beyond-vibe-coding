@@ -94,4 +94,19 @@ const switchUrl = currentPath.replace(`/${lang}`, `/${otherLang}`);
 		border-left: 1px solid var(--border);
 		padding-left: 1.5rem;
 	}
+
+	@media (max-width: 768px) {
+		.site-header__logo {
+			white-space: nowrap;
+			font-size: 1.1rem;
+		}
+
+		.site-header__nav {
+			gap: 1rem;
+		}
+
+		.site-header__lang {
+			padding-left: 1rem;
+		}
+	}
 </style>
