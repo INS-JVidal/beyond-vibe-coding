@@ -84,4 +84,18 @@ const formattedDate = pubDate.toLocaleDateString(lang, {
 		display: flex;
 		gap: 0.4rem;
 	}
+
+	@media (max-width: 768px) {
+		.post-card__link {
+			padding: 1.25rem 1.25rem;
+		}
+
+		.post-card__title {
+			font-size: 1.4rem;
+		}
+
+		.post-card__desc {
+			font-size: 1.05rem;
+		}
+	}
 </style>

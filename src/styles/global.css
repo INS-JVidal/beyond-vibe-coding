@@ -210,3 +210,28 @@ a:hover {
 	background: var(--border);
 	color: var(--text-secondary);
 }
+
+/* ═══════════════════════════════════════════════════════ */
+/* MOBILE                                                 */
+/* ═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+	body {
+		font-size: 1.125rem;
+	}
+
+	.prose {
+		font-size: 1.125rem;
+	}
+
+	.prose h2 {
+		font-size: 1.55rem;
+	}
+
+	.prose h3 {
+		font-size: 1.3rem;
+	}
+
+	.prose pre {
+		padding: 1rem 1.15rem;
+	}
+}

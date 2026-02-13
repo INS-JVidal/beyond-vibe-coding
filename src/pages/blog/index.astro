@@ -44,4 +44,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 		flex-direction: column;
 		gap: 1.25rem;
 	}
+
+	@media (max-width: 768px) {
+		.blog-list {
+			padding: 2rem 0 3rem;
+		}
+
+		.blog-list__title {
+			font-size: 1.75rem;
+		}
+	}
 </style>

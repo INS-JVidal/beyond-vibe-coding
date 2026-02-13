@@ -79,4 +79,14 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 		flex-direction: column;
 		gap: 1.25rem;
 	}
+
+	@media (max-width: 768px) {
+		.hero {
+			padding: 2.5rem 0 2rem;
+		}
+
+		.hero__lead {
+			font-size: 1.15rem;
+		}
+	}
 </style>
