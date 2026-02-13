@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { t, type Lang } from '../i18n/utils';
 
 interface Props {
 	title: string;
@@ -11,6 +12,7 @@ interface Props {
 	category?: string;
 	readingTime?: number;
 	lang?: string;
+	image?: { src: string; mobileSrc?: string; alt: string };
 }
 
 const {
@@ -23,6 +25,7 @@ const {
 	category,
 	readingTime,
 	lang = 'es',
+	image,
 } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString(lang, {
@@ -40,15 +43,23 @@ const formattedUpdate = updatedDate?.toLocaleDateString(lang, {
 
 <BaseLayout title={`${title} — Prompt Lúcido`} description={description} lang={lang}>
 	<article class="post container--narrow">
+		{image && (
+			<picture class="post__cover">
+				{image.mobileSrc && (
+					<source media="(max-width: 768px)" srcset={image.mobileSrc} />
+				)}
+				<img src={image.src} alt={image.alt} />
+			</picture>
+		)}
 		<header class="post__header">
 			{category && <span class="tag">{category}</span>}
 			<h1 class="post__title">{title}</h1>
 			<p class="post__meta">
 				<time datetime={pubDate.toISOString()}>{formattedDate}</time>
-				{readingTime && <span>&middot; {readingTime} min de lectura</span>}
+				{readingTime && <span>&middot; {readingTime} {t('post.readingTime', lang as Lang)}</span>}
 			</p>
 			{updatedDate && (
-				<p class="post__updated">Actualizado el {formattedUpdate}</p>
+				<p class="post__updated">{t('post.updated', lang as Lang)} {formattedUpdate}</p>
 			)}
 		</header>
 
@@ -70,6 +81,17 @@ const formattedUpdate = updatedDate?.toLocaleDateString(lang, {
 	.post {
 		padding-top: 3rem;
 		padding-bottom: 4rem;
+	}
+
+	.post__cover {
+		display: block;
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
+	.post__cover img {
+		width: 100%;
+		border-radius: 12px;
 	}
 
 	.post__header {

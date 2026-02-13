@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 630 630">
+
+  <defs>
+
+    <!-- Warm gradient background -->
+
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+
+      <stop offset="0%" stop-color="#FAF9F6"/>
+
+      <stop offset="100%" stop-color="#F0EFEA"/>
+
+    </linearGradient>
+
+
+
+    <!-- Terracotta gradient for accent shapes -->
+
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+
+      <stop offset="0%" stop-color="#C4704A"/>
+
+      <stop offset="100%" stop-color="#A85A38"/>
+
+    </linearGradient>
+
+
+
+    <!-- Subtle warm glow -->
+
+    <radialGradient id="glow" cx="0.55" cy="0.45" r="0.5">
+
+      <stop offset="0%" stop-color="#C4704A" stop-opacity="0.06"/>
+
+      <stop offset="100%" stop-color="#C4704A" stop-opacity="0"/>
+
+    </radialGradient>
+
+  </defs>
+
+
+
+  <!-- Background -->
+
+  <rect width="630" height="630" fill="url(#bg)"/>
+
+  <rect width="630" height="630" fill="url(#glow)"/>
+
+
+
+  <!-- Abstract geometric composition — reframed for square -->
+
+
+
+  <!-- Large soft circle, upper right -->
+
+  <circle cx="460" cy="160" r="180" fill="#E0DFDA" opacity="0.4"/>
+
+
+
+  <!-- Medium circle, overlapping -->
+
+  <circle cx="380" cy="280" r="110" fill="#E0DFDA" opacity="0.3"/>
+
+
+
+  <!-- Terracotta arc, main visual anchor -->
+
+  <path d="M 50 630 Q 200 200 500 180" stroke="url(#accent)" stroke-width="3" fill="none" opacity="0.5"/>
+
+  <path d="M 20 630 Q 180 280 480 260" stroke="#C4704A" stroke-width="1.5" fill="none" opacity="0.25"/>
+
+
+
+  <!-- Small filled circles -->
+
+  <circle cx="340" cy="220" r="6" fill="#C4704A" opacity="0.6"/>
+
+  <circle cx="480" cy="340" r="4" fill="#C4704A" opacity="0.4"/>
+
+  <circle cx="160" cy="380" r="5" fill="#C4704A" opacity="0.35"/>
+
+  <circle cx="400" cy="480" r="3.5" fill="#C4704A" opacity="0.3"/>
+
+  <circle cx="560" cy="260" r="3" fill="#6B6B63" opacity="0.3"/>
+
+
+
+  <!-- Ring elements -->
+
+  <circle cx="260" cy="300" r="20" fill="none" stroke="#C4704A" stroke-width="1.5" opacity="0.2"/>
+
+  <circle cx="540" cy="400" r="14" fill="none" stroke="#6B6B63" stroke-width="1" opacity="0.2"/>
+
+  <circle cx="100" cy="200" r="30" fill="none" stroke="#E0DFDA" stroke-width="1.5" opacity="0.5"/>
+
+
+
+  <!-- Thin horizontal lines suggesting code/structure -->
+
+  <line x1="300" y1="400" x2="460" y2="400" stroke="#E0DFDA" stroke-width="1.5" opacity="0.6"/>
+
+  <line x1="320" y1="420" x2="420" y2="420" stroke="#E0DFDA" stroke-width="1.5" opacity="0.45"/>
+
+  <line x1="340" y1="440" x2="440" y2="440" stroke="#E0DFDA" stroke-width="1.5" opacity="0.3"/>
+
+
+
+  <line x1="460" y1="460" x2="570" y2="460" stroke="#E0DFDA" stroke-width="1.5" opacity="0.4"/>
+
+  <line x1="480" y1="480" x2="550" y2="480" stroke="#E0DFDA" stroke-width="1.5" opacity="0.25"/>
+
+
+
+  <!-- Small rectangles hinting at modules -->
+
+  <rect x="60" y="340" width="60" height="40" rx="4" fill="none" stroke="#E0DFDA" stroke-width="1" opacity="0.4"/>
+
+  <rect x="80" y="400" width="45" height="30" rx="3" fill="none" stroke="#E0DFDA" stroke-width="1" opacity="0.3"/>
+
+
+
+  <!-- Diagonal accent line -->
+
+  <line x1="30" y1="520" x2="250" y2="440" stroke="#C4704A" stroke-width="1" opacity="0.15"/>
+
+
+
+  <!-- Small terracotta squares, visual punctuation -->
+
+  <rect x="380" y="160" width="12" height="12" rx="2" fill="#C4704A" opacity="0.45" transform="rotate(15, 386, 166)"/>
+
+  <rect x="530" y="380" width="8" height="8" rx="1.5" fill="#C4704A" opacity="0.3" transform="rotate(30, 534, 384)"/>
+
+
+
+</svg>

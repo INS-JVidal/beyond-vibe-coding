@@ -15,6 +15,7 @@ const blog = defineCollection({
 		lang: z.string().default('es'),
 		image: z.object({
 			src: z.string(),
+			mobileSrc: z.string().optional(),
 			alt: z.string(),
 		}).optional(),
 		readingTime: z.number().optional(),

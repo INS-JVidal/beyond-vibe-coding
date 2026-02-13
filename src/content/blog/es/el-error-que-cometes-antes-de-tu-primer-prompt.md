@@ -9,7 +9,8 @@ category: "fundamentos"
 draft: false
 lang: "es"
 image:
-  src: "/images/blog/greenfield-vs-brownfield.jpg"
+  src: "/images/blog/greenfield-vs-brownfield.svg"
+  mobileSrc: "/images/blog/greenfield-vs-brownfield-mobile.svg"
   alt: "Dos desarrolladores frente a proyectos completamente distintos"
 readingTime: 7
 ---
