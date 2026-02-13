@@ -19,6 +19,7 @@ const blog = defineCollection({
 			alt: z.string(),
 		}).optional(),
 		readingTime: z.number().optional(),
+		translationId: z.string().optional(),
 	}),
 });
 

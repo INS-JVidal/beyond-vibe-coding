@@ -13,6 +13,7 @@ interface Props {
 	readingTime?: number;
 	lang?: string;
 	image?: { src: string; mobileSrc?: string; alt: string };
+	translationUrl?: string;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
 	readingTime,
 	lang = 'es',
 	image,
+	translationUrl,
 } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString(lang, {
@@ -41,7 +43,7 @@ const formattedUpdate = updatedDate?.toLocaleDateString(lang, {
 });
 ---
 
-<BaseLayout title={`${title} — Prompt Lúcido`} description={description} lang={lang}>
+<BaseLayout title={`${title} — Prompt Lúcido`} description={description} lang={lang} translationUrl={translationUrl}>
 	<article class="post container--narrow">
 		{image ? (
 			<div class="post-hero">

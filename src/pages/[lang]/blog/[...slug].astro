@@ -1,6 +1,7 @@
 ---
 import BlogPostLayout from '../../../layouts/BlogPostLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { getOtherLang, getTranslatedPostUrl, type Lang } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -8,14 +9,18 @@ export async function getStaticPaths() {
 		const [lang, ...slugParts] = post.id.split('/');
 		return {
 			params: { lang, slug: slugParts.join('/') },
-			props: { post },
+			props: { post, allPosts: posts },
 		};
 	});
 }
 
-const { post } = Astro.props;
+const { post, allPosts } = Astro.props;
 const { lang } = Astro.params;
 const { Content } = await render(post);
+
+const otherLang = getOtherLang(lang as Lang);
+const translationUrl = getTranslatedPostUrl(post.data.translationId, otherLang, allPosts)
+	?? `/${otherLang}/blog`;
 ---
 
 <BlogPostLayout
@@ -29,6 +34,7 @@ const { Content } = await render(post);
 	readingTime={post.data.readingTime}
 	image={post.data.image}
 	lang={lang}
+	translationUrl={translationUrl}
 >
 	<Content />
 </BlogPostLayout>

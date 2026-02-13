@@ -4,9 +4,10 @@ import { languages } from '../i18n/ui';
 
 interface Props {
 	lang?: Lang;
+	translationUrl?: string;
 }
 
-const { lang = 'es' } = Astro.props;
+const { lang = 'es', translationUrl } = Astro.props;
 const otherLang = getOtherLang(lang);
 const currentPath = Astro.url.pathname;
 
@@ -15,8 +16,8 @@ const links = [
 	{ href: `/${lang}/blog`, label: t('nav.blog', lang) },
 ];
 
-// Build the equivalent URL in the other language
-const switchUrl = currentPath.replace(`/${lang}`, `/${otherLang}`);
+// Use explicit translation URL for blog posts, fall back to simple prefix swap for other pages
+const switchUrl = translationUrl ?? currentPath.replace(`/${lang}`, `/${otherLang}`);
 ---
 
 <header class="site-header">

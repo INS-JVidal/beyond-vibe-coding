@@ -8,11 +8,13 @@ interface Props {
 	title: string;
 	description?: string;
 	lang?: string;
+	translationUrl?: string;
 }
 
 const {
 	title,
 	lang = 'es',
+	translationUrl,
 } = Astro.props;
 
 const description = Astro.props.description ?? t('site.description', lang as Lang);
@@ -30,7 +32,7 @@ const description = Astro.props.description ?? t('site.description', lang as Lan
 	<title>{title}</title>
 </head>
 <body>
-	<Header lang={lang} />
+	<Header lang={lang} translationUrl={translationUrl} />
 	<main>
 		<slot />
 	</main>
