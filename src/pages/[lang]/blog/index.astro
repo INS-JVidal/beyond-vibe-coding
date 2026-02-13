@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { t, type Lang } from '../../../i18n/utils';
+import { ui } from '../../../i18n/ui';
+
+export function getStaticPaths() {
+	return Object.keys(ui).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === lang))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`${t('blog.title', lang)} — ${t('site.title', lang)}`} lang={lang}>
+	<section class="blog-list container--narrow">
+		<h1 class="blog-list__title">{t('blog.title', lang)}</h1>
+		<div class="blog-list__grid">
+			{posts.length > 0 ? (
+				posts.map((post) => {
+					const slug = post.id.replace(/^(es|en)\//, '');
+					return (
+						<PostCard
+							title={post.data.title}
+							description={post.data.description}
+							pubDate={post.data.pubDate}
+							href={`/${lang}/blog/${slug}`}
+							category={post.data.category}
+							readingTime={post.data.readingTime}
+							lang={lang}
+						/>
+					);
+				})
+			) : (
+				<p class="blog-list__empty">{t('blog.empty', lang)}</p>
+			)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.blog-list {
+		padding: 3rem 0 4rem;
+	}
+
+	.blog-list__title {
+		font-family: var(--font-heading);
+		font-size: 2.25rem;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		margin-bottom: 2rem;
+	}
+
+	.blog-list__grid {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.blog-list__empty {
+		font-family: var(--font-body);
+		color: var(--text-muted);
+		font-size: 1.1rem;
+	}
+
+	@media (max-width: 768px) {
+		.blog-list {
+			padding: 2rem 0 3rem;
+		}
+
+		.blog-list__title {
+			font-size: 1.75rem;
+		}
+	}
+</style>

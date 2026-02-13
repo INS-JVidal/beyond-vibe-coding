@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { t, type Lang } from '../i18n/utils';
 
 interface Props {
 	title: string;
@@ -11,9 +12,10 @@ interface Props {
 
 const {
 	title,
-	description = 'Desarrollo con IA para programadores conscientes.',
 	lang = 'es',
 } = Astro.props;
+
+const description = Astro.props.description ?? t('site.description', lang as Lang);
 ---
 
 <!doctype html>
@@ -28,7 +30,7 @@ const {
 	<title>{title}</title>
 </head>
 <body>
-	<Header />
+	<Header lang={lang} />
 	<main>
 		<slot />
 	</main>

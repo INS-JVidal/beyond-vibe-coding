@@ -3,7 +3,7 @@ interface Props {
 	title: string;
 	description: string;
 	pubDate: Date;
-	slug: string;
+	href: string;
 	category?: string;
 	readingTime?: number;
 	lang?: string;
@@ -13,7 +13,7 @@ const {
 	title,
 	description,
 	pubDate,
-	slug,
+	href,
 	category,
 	readingTime,
 	lang = 'es',
@@ -27,7 +27,7 @@ const formattedDate = pubDate.toLocaleDateString(lang, {
 ---
 
 <article class="post-card">
-	<a href={`${import.meta.env.BASE_URL}blog/${slug}`} class="post-card__link">
+	<a href={href} class="post-card__link">
 		{category && <span class="tag">{category}</span>}
 		<h3 class="post-card__title">{title}</h3>
 		<p class="post-card__desc">{description}</p>

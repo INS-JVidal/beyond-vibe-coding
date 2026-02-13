@@ -1,27 +1,41 @@
 ---
-const base = import.meta.env.BASE_URL;
+import { t, getOtherLang, type Lang } from '../i18n/utils';
+import { languages } from '../i18n/ui';
+
+interface Props {
+	lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const otherLang = getOtherLang(lang);
 const currentPath = Astro.url.pathname;
 
 const links = [
-	{ href: base, label: 'Inicio' },
-	{ href: `${base}blog`, label: 'Blog' },
+	{ href: `/${lang}/`, label: t('nav.home', lang) },
+	{ href: `/${lang}/blog`, label: t('nav.blog', lang) },
 ];
+
+// Build the equivalent URL in the other language
+const switchUrl = currentPath.replace(`/${lang}`, `/${otherLang}`);
 ---
 
 <header class="site-header">
 	<div class="site-header__inner container">
-		<a href={import.meta.env.BASE_URL} class="site-header__logo">
+		<a href={`/${lang}/`} class="site-header__logo">
 			Prompt L<span class="site-header__accent">ú</span>cido
 		</a>
-		<nav class="site-header__nav" aria-label="Principal">
+		<nav class="site-header__nav" aria-label={t('nav.aria', lang)}>
 			{links.map(({ href, label }) => (
 				<a
 					href={href}
-					class:list={['site-header__link', { active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }]}
+					class:list={['site-header__link', { active: currentPath === href || (href !== `/${lang}/` && currentPath.startsWith(href)) }]}
 				>
 					{label}
 				</a>
 			))}
+			<a href={switchUrl} class="site-header__link site-header__lang">
+				{languages[otherLang]}
+			</a>
 		</nav>
 	</div>
 </header>
@@ -74,5 +88,10 @@ const links = [
 	.site-header__link:hover,
 	.site-header__link.active {
 		color: var(--text);
+	}
+
+	.site-header__lang {
+		border-left: 1px solid var(--border);
+		padding-left: 1.5rem;
 	}
 </style>
