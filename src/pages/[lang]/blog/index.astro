@@ -11,7 +11,7 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: Lang };
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === lang))
+const posts = (await getCollection('blog', ({ data }) => (import.meta.env.PROD ? !data.draft : true) && data.lang === lang))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 // Extract unique series names from published posts
