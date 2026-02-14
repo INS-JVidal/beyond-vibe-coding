@@ -9,9 +9,11 @@ category: "fundamentals"
 draft: false
 lang: "en"
 image:
-  src: "/images/blog/greenfield-vs-brownfield.jpg"
+  src: "/images/blog/greenfield-vs-brownfield.svg"
+  mobileSrc: "/images/blog/greenfield-vs-brownfield-mobile.svg"
   alt: "Two developers facing completely different projects"
 readingTime: 8
+translationId: "mistake-before-first-prompt"
 ---
 
 AI hasn't changed what you need to know to build software. It's changed where you put your attention.

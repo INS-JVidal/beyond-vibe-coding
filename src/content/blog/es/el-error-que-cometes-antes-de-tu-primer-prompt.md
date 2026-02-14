@@ -9,9 +9,11 @@ category: "fundamentos"
 draft: false
 lang: "es"
 image:
-  src: "/images/blog/greenfield-vs-brownfield.jpg"
+  src: "/images/blog/greenfield-vs-brownfield.svg"
+  mobileSrc: "/images/blog/greenfield-vs-brownfield-mobile.svg"
   alt: "Dos desarrolladores frente a proyectos completamente distintos"
 readingTime: 8
+translationId: "mistake-before-first-prompt"
 ---
 
 La IA no ha cambiado lo que necesitas saber para desarrollar software. Ha cambiado dónde pones la atención.
