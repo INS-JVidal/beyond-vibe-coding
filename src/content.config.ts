@@ -22,6 +22,7 @@ const blog = defineCollection({
 		translationId: z.string().optional(),
 		series: z.string().optional(),
 		seriesOrder: z.number().optional(),
+		audio: z.boolean().default(false),
 	}),
 });
 

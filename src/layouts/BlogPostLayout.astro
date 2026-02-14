@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import AudioPlayer from '../components/AudioPlayer.astro';
 import { t, type Lang } from '../i18n/utils';
 
 interface Heading {
@@ -21,6 +22,7 @@ interface Props {
 	image?: { src: string; mobileSrc?: string; alt: string };
 	translationUrl?: string;
 	headings?: Heading[];
+	audio?: boolean;
 }
 
 const {
@@ -35,6 +37,7 @@ const {
 	image,
 	translationUrl,
 	headings = [],
+	audio = false,
 } = Astro.props;
 
 const formattedDate = pubDate.toLocaleDateString(lang, {
@@ -50,6 +53,9 @@ const formattedUpdate = updatedDate?.toLocaleDateString(lang, {
 });
 
 const hasH2 = headings.some((h) => h.depth === 2);
+
+const slug = Astro.url.pathname.replace(/^\/(es|en)\/blog\//, '').replace(/\/$/, '');
+const audioSrc = audio ? `/audio/blog/${lang}/${slug}.mp3` : null;
 ---
 
 <BaseLayout title={`${title} — Prompt Lúcido`} description={description} lang={lang} translationUrl={translationUrl}>
@@ -87,6 +93,8 @@ const hasH2 = headings.some((h) => h.depth === 2);
 				)}
 			</header>
 		)}
+
+		{audioSrc && <AudioPlayer src={audioSrc} lang={lang} />}
 
 		{hasH2 && (
 			<div class="post__toc-mobile">
