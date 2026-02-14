@@ -13,12 +13,29 @@ const { lang } = Astro.params as { lang: Lang };
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lang === lang))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Extract unique series names from published posts
+const seriesSet = new Set<string>();
+posts.forEach((p) => {
+	if (p.data.series) seriesSet.add(p.data.series);
+});
+const seriesList = Array.from(seriesSet).sort();
 ---
 
 <BaseLayout title={`${t('blog.title', lang)} — ${t('site.title', lang)}`} lang={lang}>
 	<section class="blog-list container--narrow">
 		<h1 class="blog-list__title">{t('blog.title', lang)}</h1>
-		<div class="blog-list__grid">
+
+		{seriesList.length > 0 && (
+			<div class="blog-filters" role="group" aria-label="Filter by series">
+				<button class="blog-filter active" data-filter="">{t('blog.filterAll', lang)}</button>
+				{seriesList.map((s) => (
+					<button class="blog-filter" data-filter={s}>{s}</button>
+				))}
+			</div>
+		)}
+
+		<div class="blog-list__entries">
 			{posts.length > 0 ? (
 				posts.map((post) => {
 					const slug = post.id.replace(/^(es|en)\//, '');
@@ -29,6 +46,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lan
 							pubDate={post.data.pubDate}
 							href={`/${lang}/blog/${slug}`}
 							category={post.data.category}
+							series={post.data.series}
 							readingTime={post.data.readingTime}
 							lang={lang}
 						/>
@@ -51,13 +69,47 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lan
 		font-size: 2.25rem;
 		font-weight: 700;
 		letter-spacing: -0.02em;
+		margin-bottom: 1.5rem;
+	}
+
+	/* --- Filter pills --- */
+
+	.blog-filters {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 		margin-bottom: 2rem;
 	}
 
-	.blog-list__grid {
+	.blog-filter {
+		font-family: var(--font-ui);
+		font-size: 0.8rem;
+		font-weight: 500;
+		padding: 0.35rem 0.85rem;
+		border-radius: 20px;
+		border: 1px solid var(--border);
+		background: transparent;
+		color: var(--text-secondary);
+		cursor: pointer;
+		transition: background 0.15s, color 0.15s, border-color 0.15s;
+	}
+
+	.blog-filter:hover {
+		border-color: var(--text-muted);
+		color: var(--text);
+	}
+
+	.blog-filter.active {
+		color: var(--accent);
+		background: var(--accent-light);
+		border-color: var(--accent);
+	}
+
+	/* --- Entries --- */
+
+	.blog-list__entries {
 		display: flex;
 		flex-direction: column;
-		gap: 1.25rem;
 	}
 
 	.blog-list__empty {
@@ -76,3 +128,34 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lan
 		}
 	}
 </style>
+
+<script>
+	function initFilters() {
+		const buttons = document.querySelectorAll<HTMLButtonElement>('.blog-filter');
+		const entries = document.querySelectorAll<HTMLElement>('.post-entry');
+		if (buttons.length === 0) return;
+
+		buttons.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const filter = btn.dataset.filter ?? '';
+
+				// Update active button
+				buttons.forEach((b) => b.classList.remove('active'));
+				btn.classList.add('active');
+
+				// Filter entries
+				entries.forEach((entry) => {
+					const series = entry.dataset.series ?? '';
+					if (filter === '' || series === filter) {
+						entry.style.display = '';
+					} else {
+						entry.style.display = 'none';
+					}
+				});
+			});
+		});
+	}
+
+	initFilters();
+	document.addEventListener('astro:after-swap', initFilters);
+</script>

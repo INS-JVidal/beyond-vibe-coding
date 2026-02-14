@@ -6,6 +6,8 @@ updatedDate: "2026-02-17"
 author: "Prompt Lúcido"
 tags: ["ia", "desarrollo", "entender", "contexto", "ingeniería de software"]
 category: "las-cinco-actividades"
+series: "Las cinco actividades"
+seriesOrder: 1
 draft: false
 lang: "es"
 image:

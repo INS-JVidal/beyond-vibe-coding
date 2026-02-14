@@ -6,6 +6,8 @@ updatedDate: "2026-02-17"
 author: "Prompt Lúcido"
 tags: ["ai", "development", "understanding", "context", "software-engineering"]
 category: "the-five-activities"
+series: "The Five Activities"
+seriesOrder: 1
 draft: false
 lang: "en"
 image:

@@ -5,6 +5,7 @@ interface Props {
 	pubDate: Date;
 	href: string;
 	category?: string;
+	series?: string;
 	readingTime?: number;
 	lang?: string;
 }
@@ -14,7 +15,7 @@ const {
 	description,
 	pubDate,
 	href,
-	category,
+	series,
 	readingTime,
 	lang = 'es',
 } = Astro.props;
@@ -26,12 +27,12 @@ const formattedDate = pubDate.toLocaleDateString(lang, {
 });
 ---
 
-<article class="post-card">
-	<a href={href} class="post-card__link">
-		{category && <span class="tag">{category}</span>}
-		<h3 class="post-card__title">{title}</h3>
-		<p class="post-card__desc">{description}</p>
-		<p class="post-card__meta">
+<article class="post-entry" data-series={series ?? ''}>
+	<a href={href} class="post-entry__link">
+		{series && <span class="post-entry__series">{series}</span>}
+		<h3 class="post-entry__title">{title}</h3>
+		<p class="post-entry__desc">{description}</p>
+		<p class="post-entry__meta">
 			<time datetime={pubDate.toISOString()}>{formattedDate}</time>
 			{readingTime && <span>&middot; {readingTime} min</span>}
 		</p>
@@ -39,63 +40,83 @@ const formattedDate = pubDate.toLocaleDateString(lang, {
 </article>
 
 <style>
-	.post-card {
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: 12px;
-		transition: box-shadow 0.2s, border-color 0.2s;
+	.post-entry {
+		border-bottom: 1px solid var(--border);
+		transition: transform 0.15s;
 	}
 
-	.post-card:hover {
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-		border-color: var(--accent);
+	.post-entry:last-child {
+		border-bottom: none;
 	}
 
-	.post-card__link {
+	.post-entry:hover {
+		transform: translateX(4px);
+	}
+
+	.post-entry__link {
 		display: block;
-		padding: 1.75rem 2rem;
+		padding: 1.5rem 0;
 		text-decoration: none;
 		color: inherit;
 	}
 
-	.post-card__title {
-		font-family: var(--font-heading);
-		font-size: 1.875rem;
+	.post-entry__series {
+		display: inline-block;
+		font-family: var(--font-ui);
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--accent);
+		background: var(--accent-light);
+		border: 1px solid var(--accent);
+		border-radius: 4px;
+		padding: 0.15rem 0.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.post-entry__title {
+		font-family: var(--font-body);
+		font-size: 1.65rem;
 		font-weight: 700;
-		line-height: 1.25;
+		line-height: 1.3;
 		letter-spacing: -0.01em;
 		color: var(--text);
+		transition: color 0.15s;
+	}
+
+	.post-entry:hover .post-entry__title {
+		color: var(--accent);
+	}
+
+	.post-entry__desc {
+		font-family: var(--font-body);
+		font-size: 1.1rem;
+		line-height: 1.55;
+		color: var(--text-secondary);
 		margin-top: 0.5rem;
 	}
 
-	.post-card__desc {
-		font-family: var(--font-body);
-		font-size: 1.45rem;
-		line-height: 1.6;
-		color: var(--text-secondary);
-		margin-top: 0.75rem;
-	}
-
-	.post-card__meta {
+	.post-entry__meta {
 		font-family: var(--font-ui);
-		font-size: 0.875rem;
+		font-size: 0.825rem;
 		color: var(--text-muted);
-		margin-top: 1rem;
+		margin-top: 0.75rem;
 		display: flex;
 		gap: 0.4rem;
 	}
 
 	@media (max-width: 768px) {
-		.post-card__link {
-			padding: 1.25rem 1.25rem;
+		.post-entry__link {
+			padding: 1.25rem 0;
 		}
 
-		.post-card__title {
-			font-size: 1.4rem;
+		.post-entry__title {
+			font-size: 1.35rem;
 		}
 
-		.post-card__desc {
-			font-size: 1.05rem;
+		.post-entry__desc {
+			font-size: 1rem;
 		}
 	}
 </style>

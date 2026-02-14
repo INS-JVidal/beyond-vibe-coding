@@ -6,6 +6,8 @@ updatedDate: "2026-02-14"
 author: "Prompt Lúcido"
 tags: ["ai", "software-development", "greenfield", "brownfield", "software-engineering"]
 category: "fundamentals"
+series: "Fundamentals"
+seriesOrder: 1
 draft: false
 lang: "en"
 image:

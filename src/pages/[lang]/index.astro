@@ -34,6 +34,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lan
 							pubDate={post.data.pubDate}
 							href={`/${lang}/blog/${slug}`}
 							category={post.data.category}
+							series={post.data.series}
 							readingTime={post.data.readingTime}
 							lang={lang}
 						/>
@@ -64,6 +65,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.lan
 		font-family: var(--font-body);
 		color: var(--accent);
 		font-style: italic;
+		font-size: 110%;
+		margin-right: 0.02em;
 	}
 
 	.hero__lead {

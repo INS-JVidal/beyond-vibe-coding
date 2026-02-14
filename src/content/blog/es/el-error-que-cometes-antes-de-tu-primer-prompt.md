@@ -6,6 +6,8 @@ updatedDate: "2026-02-14"
 author: "Prompt Lúcido"
 tags: ["ia", "desarrollo", "greenfield", "brownfield", "ingeniería de software"]
 category: "fundamentos"
+series: "Fundamentos"
+seriesOrder: 1
 draft: false
 lang: "es"
 image:

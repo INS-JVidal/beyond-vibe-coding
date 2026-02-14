@@ -20,6 +20,8 @@ const blog = defineCollection({
 		}).optional(),
 		readingTime: z.number().optional(),
 		translationId: z.string().optional(),
+		series: z.string().optional(),
+		seriesOrder: z.number().optional(),
 	}),
 });
 
