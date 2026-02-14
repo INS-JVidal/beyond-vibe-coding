@@ -8,7 +8,7 @@ tags: ["ai", "development", "understanding", "context", "software-engineering"]
 category: "the-five-activities"
 series: "The Five Activities"
 seriesOrder: 1
-draft: false
+draft: true
 lang: "en"
 image:
   src: "/images/blog/ai-understands-code-not-project.svg"

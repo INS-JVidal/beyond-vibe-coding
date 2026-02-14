@@ -8,7 +8,7 @@ tags: ["ia", "desarrollo", "entender", "contexto", "ingeniería de software"]
 category: "las-cinco-actividades"
 series: "Las cinco actividades"
 seriesOrder: 1
-draft: false
+draft: true
 lang: "es"
 image:
   src: "/images/blog/ia-entiende-codigo-no-proyecto.svg"
