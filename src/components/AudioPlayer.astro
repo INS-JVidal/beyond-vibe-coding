@@ -1,0 +1,246 @@
+---
+import { t, type Lang } from '../i18n/utils';
+
+interface Props {
+	src: string;
+	lang: string;
+}
+
+const { src, lang } = Astro.props;
+---
+
+<div class="audio-player" data-audio-src={src}>
+	<button
+		class="audio-player__btn"
+		type="button"
+		aria-label={t('audio.play', lang as Lang)}
+		data-label-play={t('audio.play', lang as Lang)}
+		data-label-pause={t('audio.pause', lang as Lang)}
+	>
+		<svg class="audio-player__icon audio-player__icon--play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+			<path d="M8 5v14l11-7z" />
+		</svg>
+		<svg class="audio-player__icon audio-player__icon--pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none">
+			<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+		</svg>
+	</button>
+
+	<span class="audio-player__time">
+		<span class="audio-player__current">0:00</span>
+		<span class="audio-player__separator">/</span>
+		<span class="audio-player__duration">0:00</span>
+	</span>
+
+	<div class="audio-player__track" role="slider" aria-label="Audio progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+		<div class="audio-player__fill" style="width:0%"></div>
+	</div>
+
+	<span class="audio-player__badge">
+		<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+			<path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61z" />
+		</svg>
+		{t('audio.aiGenerated', lang as Lang)}
+	</span>
+
+	<audio preload="metadata">
+		<source src={src} type="audio/mpeg" />
+	</audio>
+</div>
+
+<script>
+	function initAudioPlayers() {
+		document.querySelectorAll<HTMLElement>('.audio-player').forEach((player) => {
+			const audio = player.querySelector<HTMLAudioElement>('audio');
+			const btn = player.querySelector<HTMLButtonElement>('.audio-player__btn');
+			const iconPlay = player.querySelector<SVGElement>('.audio-player__icon--play');
+			const iconPause = player.querySelector<SVGElement>('.audio-player__icon--pause');
+			const current = player.querySelector<HTMLElement>('.audio-player__current');
+			const duration = player.querySelector<HTMLElement>('.audio-player__duration');
+			const track = player.querySelector<HTMLElement>('.audio-player__track');
+			const fill = player.querySelector<HTMLElement>('.audio-player__fill');
+
+			if (!audio || !btn || !iconPlay || !iconPause || !current || !duration || !track || !fill) return;
+
+			// Prevent double-init
+			if (player.dataset.initialized === 'true') return;
+			player.dataset.initialized = 'true';
+
+			function formatTime(s: number): string {
+				if (!isFinite(s) || s < 0) return '0:00';
+				const m = Math.floor(s / 60);
+				const sec = Math.floor(s % 60);
+				return `${m}:${sec.toString().padStart(2, '0')}`;
+			}
+
+			function setPlaying(playing: boolean) {
+				iconPlay!.style.display = playing ? 'none' : '';
+				iconPause!.style.display = playing ? '' : 'none';
+				btn!.setAttribute('aria-label', playing
+					? btn!.dataset.labelPause!
+					: btn!.dataset.labelPlay!
+				);
+			}
+
+			btn.addEventListener('click', () => {
+				if (audio.paused) {
+					audio.play();
+				} else {
+					audio.pause();
+				}
+			});
+
+			audio.addEventListener('play', () => setPlaying(true));
+			audio.addEventListener('pause', () => setPlaying(false));
+
+			audio.addEventListener('loadedmetadata', () => {
+				duration.textContent = formatTime(audio.duration);
+			});
+
+			audio.addEventListener('timeupdate', () => {
+				current.textContent = formatTime(audio.currentTime);
+				if (audio.duration > 0) {
+					const pct = (audio.currentTime / audio.duration) * 100;
+					fill.style.width = `${pct}%`;
+					track.setAttribute('aria-valuenow', String(Math.round(pct)));
+				}
+			});
+
+			audio.addEventListener('ended', () => {
+				setPlaying(false);
+				fill.style.width = '0%';
+				current.textContent = '0:00';
+				track.setAttribute('aria-valuenow', '0');
+			});
+
+			function seek(e: MouseEvent | KeyboardEvent) {
+				if (e instanceof MouseEvent) {
+					const rect = track.getBoundingClientRect();
+					const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+					if (audio.duration > 0) {
+						audio.currentTime = pct * audio.duration;
+					}
+				}
+			}
+
+			track.addEventListener('click', seek);
+
+			track.addEventListener('keydown', (e: KeyboardEvent) => {
+				if (!audio.duration) return;
+				const step = 5;
+				if (e.key === 'ArrowRight') {
+					audio.currentTime = Math.min(audio.duration, audio.currentTime + step);
+				} else if (e.key === 'ArrowLeft') {
+					audio.currentTime = Math.max(0, audio.currentTime - step);
+				}
+			});
+		});
+	}
+
+	initAudioPlayers();
+	document.addEventListener('astro:after-swap', initAudioPlayers);
+</script>
+
+<style>
+	.audio-player {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.75rem 1rem;
+		background: var(--bg-alt);
+		border-radius: 8px;
+		max-width: var(--content-width);
+		margin: 1.5rem auto;
+	}
+
+	.audio-player__btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		min-width: 40px;
+		border-radius: 50%;
+		border: 1px solid var(--border);
+		background: var(--surface);
+		color: var(--text);
+		cursor: pointer;
+		transition: border-color 0.15s, color 0.15s;
+	}
+
+	.audio-player__btn:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.audio-player__time {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		color: var(--text-secondary);
+		white-space: nowrap;
+		min-width: 5.5em;
+	}
+
+	.audio-player__separator {
+		margin: 0 0.15em;
+		opacity: 0.5;
+	}
+
+	.audio-player__track {
+		flex: 1;
+		height: 4px;
+		background: var(--border);
+		border-radius: 2px;
+		cursor: pointer;
+		position: relative;
+		min-width: 60px;
+	}
+
+	.audio-player__track:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 4px;
+		border-radius: 2px;
+	}
+
+	.audio-player__fill {
+		height: 100%;
+		background: var(--accent);
+		border-radius: 2px;
+		transition: width 0.1s linear;
+	}
+
+	.audio-player__badge {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		white-space: nowrap;
+	}
+
+	.audio-player__badge svg {
+		opacity: 0.6;
+	}
+
+	@media (max-width: 768px) {
+		.audio-player {
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			padding: 0.625rem 0.75rem;
+		}
+
+		.audio-player__time {
+			display: none;
+		}
+
+		.audio-player__track {
+			order: 1;
+			flex-basis: 100%;
+		}
+
+		.audio-player__badge {
+			order: 2;
+			margin-left: auto;
+		}
+	}
+</style>
