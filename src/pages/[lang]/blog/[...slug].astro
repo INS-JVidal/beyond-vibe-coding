@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 import { getOtherLang, getTranslatedPostUrl, type Lang } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blog', ({ data }) => import.meta.env.PROD ? !data.draft : true);
 	return posts.map((post) => {
 		const [lang, ...slugParts] = post.id.split('/');
 		return {
