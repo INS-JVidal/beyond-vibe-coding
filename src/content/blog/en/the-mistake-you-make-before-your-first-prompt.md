@@ -16,6 +16,7 @@ image:
   alt: ""
 readingTime: 8
 translationId: "mistake-before-first-prompt"
+audio: true
 ---
 
 AI hasn't changed what you need to know to build software. It's changed where you put your attention.
