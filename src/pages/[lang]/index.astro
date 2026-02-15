@@ -17,7 +17,7 @@ const posts = (await getCollection('blog', ({ data }) => (import.meta.env.PROD ?
 
 <BaseLayout title={`${t('site.title', lang)} — ${t('site.description', lang)}`} lang={lang}>
 	<section class="hero container--narrow">
-		<h1 class="hero__title">Prompt L<span class="hero__accent">ú</span>cido</h1>
+		<h1 class="hero__title">Prompt L<span class="accent-mark">ú</span>cido</h1>
 		<p class="hero__lead">{t('home.lead', lang)}</p>
 	</section>
 
@@ -58,14 +58,6 @@ const posts = (await getCollection('blog', ({ data }) => (import.meta.env.PROD ?
 		font-weight: 700;
 		letter-spacing: -0.03em;
 		line-height: 1.1;
-	}
-
-	.hero__accent {
-		font-family: var(--font-body);
-		color: var(--accent);
-		font-style: italic;
-		font-size: 110%;
-		margin-right: 0.02em;
 	}
 
 	.hero__lead {

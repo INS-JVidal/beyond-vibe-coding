@@ -32,10 +32,14 @@
 	--code-bg:       #2b2b2b;
 	--code-text:     #f8f8f2;
 
+	/* Transitions */
+	--transition-fast: 0.15s ease;
+
 	/* Spacing */
 	--content-width: 720px;
 	--page-width:    960px;
 	--gap:           1.5rem;
+	/* Breakpoint: 768px used across all components */
 }
 
 /* ═══════════════════════════════════════════════════════ */
@@ -71,7 +75,7 @@ a {
 	color: var(--accent);
 	text-decoration-thickness: 1px;
 	text-underline-offset: 2px;
-	transition: color 0.15s;
+	transition: color var(--transition-fast);
 }
 
 a:hover {
@@ -203,12 +207,20 @@ a:hover {
 	padding: 0.2rem 0.6rem;
 	border-radius: 4px;
 	text-decoration: none;
-	transition: background 0.15s;
+	transition: background var(--transition-fast);
 }
 
 .tag:hover {
 	background: var(--border);
 	color: var(--text-secondary);
+}
+
+.accent-mark {
+	font-family: var(--font-body);
+	color: var(--accent);
+	font-style: italic;
+	font-size: 110%;
+	margin-right: 0.02em;
 }
 
 /* ═══════════════════════════════════════════════════════ */
