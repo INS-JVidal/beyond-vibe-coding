@@ -1,6 +1,8 @@
 import { ui, defaultLang, type Lang } from './ui';
 import type { CollectionEntry } from 'astro:content';
 
+export type { Lang };
+
 export function t(key: keyof (typeof ui)[typeof defaultLang], lang: Lang = defaultLang): string {
 	return ui[lang][key] ?? ui[defaultLang][key];
 }
@@ -30,6 +32,6 @@ export function getTranslatedPostUrl(
 		(p) => p.data.translationId === translationId && p.data.lang === targetLang,
 	);
 	if (!match) return null;
-	const slug = match.id.replace(/^(es|en)\//, '');
+	const slug = match.id.replace(/^[^/]+\//, '');
 	return `/${targetLang}/blog/${slug}`;
 }

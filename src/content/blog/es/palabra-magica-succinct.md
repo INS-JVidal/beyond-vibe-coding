@@ -13,7 +13,7 @@ lang: "es"
 image:
   src: "/images/blog/succinct.svg"
   mobileSrc: "/images/blog/succinct-mobile.svg"
-  alt: ""
+  alt: "Ilustracion de la palabra clave succinct ahorrando tokens"
 readingTime: 4
 translationId: "succinct-magic-word"
 audio: false

@@ -13,7 +13,7 @@ lang: "es"
 image:
   src: "/images/blog/solucion-elaborada-ia-primero.svg"
   mobileSrc: "/images/blog/solucion-elaborada-ia-primero-mobile.svg"
-  alt: ""
+  alt: "Ilustracion de arquitectura de codigo sobreingeniada"
 readingTime: 8
 translationId: "solucion-elaborada-ia-te-da-primero"
 audio: false

@@ -1,14 +1,18 @@
 ---
 import { t, getLangFromUrl, type Lang } from '../i18n/utils';
 
+interface Props {
+	lang?: Lang;
+}
+
 const year = new Date().getFullYear();
-const lang = getLangFromUrl(Astro.url) as Lang;
+const lang = Astro.props.lang ?? getLangFromUrl(Astro.url) as Lang;
 ---
 
 <footer class="site-footer">
 	<div class="site-footer__inner container">
 		<p class="site-footer__copy">
-			&copy; {year} Prompt Lúcido
+			&copy; {year} {t('site.title', lang)}
 		</p>
 		<nav class="site-footer__links">
 			<a href={`/${lang}/aviso-legal`}>{t('nav.legal', lang)}</a>

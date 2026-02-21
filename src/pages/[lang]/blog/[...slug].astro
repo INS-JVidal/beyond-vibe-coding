@@ -33,7 +33,7 @@ const translationUrl = getTranslatedPostUrl(post.data.translationId, otherLang, 
 	readingTime={post.data.readingTime}
 	image={post.data.image}
 	audio={post.data.audio}
-	lang={lang}
+	lang={lang as Lang}
 	translationUrl={translationUrl}
 	headings={headings}
 >

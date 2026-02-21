@@ -18,7 +18,7 @@ interface Props {
 	tags?: string[];
 	category?: string;
 	readingTime?: number;
-	lang?: string;
+	lang?: Lang;
 	image?: { src: string; mobileSrc?: string; alt: string };
 	translationUrl?: string;
 	headings?: Heading[];
@@ -54,11 +54,11 @@ const formattedUpdate = updatedDate?.toLocaleDateString(lang, {
 
 const hasH2 = headings.some((h) => h.depth === 2);
 
-const slug = Astro.url.pathname.replace(/^\/(es|en)\/blog\//, '').replace(/\/$/, '');
+const slug = Astro.url.pathname.replace(new RegExp(`^/${lang}/blog/`), '').replace(/\/$/, '');
 const audioSrc = audio ? `/audio/blog/${lang}/${slug}.mp3` : null;
 ---
 
-<BaseLayout title={`${title} — Prompt Lúcido`} description={description} lang={lang} translationUrl={translationUrl}>
+<BaseLayout title={`${title} — ${t('site.title', lang as Lang)}`} description={description} lang={lang} translationUrl={translationUrl} image={image?.src}>
 	<div class:list={['post-wrapper', hasH2 && 'post-wrapper--with-toc']}>
 		{image ? (
 			<div class="post-hero">
@@ -148,7 +148,7 @@ const audioSrc = audio ? `/audio/blog/${lang}/${slug}.mp3` : null;
 		background: var(--bg);
 	}
 
-	@media (min-width: 900px) {
+	@media (min-width: 901px) {
 		.post__toc-mobile {
 			display: none;
 		}
@@ -216,7 +216,7 @@ const audioSrc = audio ? `/audio/blog/${lang}/${slug}.mp3` : null;
 		content: '';
 		align-self: end;
 		height: 70%;
-		background: linear-gradient(to bottom, transparent 0%, #FAF9F6 100%);
+		background: linear-gradient(to bottom, transparent 0%, var(--bg) 100%);
 		pointer-events: none;
 		z-index: 1;
 	}
@@ -274,6 +274,26 @@ const audioSrc = audio ? `/audio/blog/${lang}/${slug}.mp3` : null;
 		border-top: 1px solid var(--border);
 	}
 
+	/* --- Dark mode: hide hero image, keep header --- */
+
+	:global([data-theme="dark"]) .post-hero > picture {
+		display: none;
+	}
+
+	:global([data-theme="dark"]) .post-hero::after {
+		display: none;
+	}
+
+	:global([data-theme="dark"]) .post-hero {
+		border-bottom: 1px solid var(--border);
+		margin-bottom: 2.5rem;
+		padding-bottom: 0;
+	}
+
+	:global([data-theme="dark"]) .post-hero__header {
+		padding: 0 0 2rem 0;
+	}
+
 	@media (max-width: 768px) {
 		.post {
 			padding-bottom: 3rem;
@@ -286,6 +306,10 @@ const audioSrc = audio ? `/audio/blog/${lang}/${slug}.mp3` : null;
 
 		.post-hero__header {
 			padding: 1.25rem;
+		}
+
+		:global([data-theme="dark"]) .post-hero__header {
+			padding: 0 0 1.5rem 0;
 		}
 
 		.post__header {

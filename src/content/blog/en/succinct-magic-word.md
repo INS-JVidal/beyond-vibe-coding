@@ -13,7 +13,7 @@ lang: "en"
 image:
   src: "/images/blog/succinct.svg"
   mobileSrc: "/images/blog/succinct-mobile.svg"
-  alt: ""
+  alt: "Illustration of the succinct keyword saving tokens"
 readingTime: 4
 translationId: "succinct-magic-word"
 audio: false

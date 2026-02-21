@@ -13,7 +13,7 @@ lang: "en"
 image:
   src: "/images/blog/ai-understands-code-not-project.svg"
   mobileSrc: "/images/blog/ai-understands-code-not-project-mobile.svg"
-  alt: ""
+  alt: "Illustration of AI understanding code but not the project"
 readingTime: 8
 translationId: "ai-understands-code-not-project"
 audio: true

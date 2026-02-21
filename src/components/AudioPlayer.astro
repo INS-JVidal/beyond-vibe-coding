@@ -83,7 +83,10 @@ const { src, lang } = Astro.props;
 
 			btn.addEventListener('click', () => {
 				if (audio.paused) {
-					audio.play();
+					audio.play().catch(() => {
+						player.classList.add('audio-player--error');
+						btn.disabled = true;
+					});
 				} else {
 					audio.pause();
 				}
@@ -91,6 +94,11 @@ const { src, lang } = Astro.props;
 
 			audio.addEventListener('play', () => setPlaying(true));
 			audio.addEventListener('pause', () => setPlaying(false));
+
+			audio.addEventListener('error', () => {
+				player.classList.add('audio-player--error');
+				btn.disabled = true;
+			});
 
 			audio.addEventListener('loadedmetadata', () => {
 				duration.textContent = formatTime(audio.duration);
@@ -114,10 +122,10 @@ const { src, lang } = Astro.props;
 
 			function seek(e: MouseEvent | KeyboardEvent) {
 				if (e instanceof MouseEvent) {
-					const rect = track.getBoundingClientRect();
+					const rect = track!.getBoundingClientRect();
 					const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-					if (audio.duration > 0) {
-						audio.currentTime = pct * audio.duration;
+					if (audio!.duration > 0) {
+						audio!.currentTime = pct * audio!.duration;
 					}
 				}
 			}
@@ -220,6 +228,17 @@ const { src, lang } = Astro.props;
 
 	.audio-player__badge svg {
 		opacity: 0.6;
+	}
+
+	.audio-player--error {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	.audio-player--error .audio-player__btn {
+		border-color: var(--text-muted);
+		color: var(--text-muted);
+		cursor: not-allowed;
 	}
 
 	@media (max-width: 768px) {

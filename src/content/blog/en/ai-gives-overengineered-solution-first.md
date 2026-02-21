@@ -5,7 +5,7 @@ pubDate: "2026-02-17"
 updatedDate: "2026-02-17"
 author: "Prompt Lúcido"
 tags: ["ai coding assistant", "software design", "technical debt", "ai software development", "overengineering", "software architecture", "ai code generation", "coding with ai"]
-category: "las-cinco-actividades"
+category: "The Five Things AI Won't Do for You"
 series: "The Five Things AI Won't Do for You"
 seriesOrder: 3
 draft: false
@@ -13,7 +13,7 @@ lang: "en"
 image:
   src: "/images/blog/solucion-elaborada-ia-primero.svg"
   mobileSrc: "/images/blog/solucion-elaborada-ia-primero-mobile.svg"
-  alt: ""
+  alt: "Illustration of overengineered code architecture"
 readingTime: 8
 translationId: "solucion-elaborada-ia-te-da-primero"
 audio: true

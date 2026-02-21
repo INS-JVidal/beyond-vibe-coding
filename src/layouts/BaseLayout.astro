@@ -7,17 +7,20 @@ import { t, type Lang } from '../i18n/utils';
 interface Props {
 	title: string;
 	description?: string;
-	lang?: string;
+	lang?: Lang;
 	translationUrl?: string;
+	image?: string;
 }
 
 const {
 	title,
 	lang = 'es',
 	translationUrl,
+	image,
 } = Astro.props;
 
 const description = Astro.props.description ?? t('site.description', lang as Lang);
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -27,15 +30,41 @@ const description = Astro.props.description ?? t('site.description', lang as Lan
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content={description} />
 	<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+	<link rel="canonical" href={canonicalUrl} />
 	<meta name="generator" content={Astro.generator} />
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content={canonicalUrl} />
+	<meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+	{image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+
+	<!-- Twitter Card -->
+	<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
+	{image && <meta name="twitter:image" content={new URL(image, Astro.site)} />}
+
 	<title>{title}</title>
+	<script is:inline>
+	(function() {
+		var saved = localStorage.getItem('theme');
+		var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		if (saved === 'dark' || (!saved && prefersDark)) {
+			document.documentElement.setAttribute('data-theme', 'dark');
+		}
+	})();
+	</script>
 	<script src="https://analytics.ahrefs.com/analytics.js" data-key="Gho9WbhL3Clu1lxsVAV7aA" async></script>
 </head>
 <body>
+	<a href="#main-content" class="skip-link">Skip to content</a>
 	<Header lang={lang} translationUrl={translationUrl} />
-	<main>
+	<main id="main-content">
 		<slot />
 	</main>
-	<Footer />
+	<Footer lang={lang} />
 </body>
 </html>

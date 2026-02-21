@@ -13,7 +13,7 @@ lang: "es"
 image:
   src: "/images/blog/greenfield-vs-brownfield.svg"
   mobileSrc: "/images/blog/greenfield-vs-brownfield-mobile.svg"
-  alt: ""
+  alt: "Ilustracion de desarrollo greenfield vs brownfield"
 readingTime: 8
 translationId: "mistake-before-first-prompt"
 audio: true
