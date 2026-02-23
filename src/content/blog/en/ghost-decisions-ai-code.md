@@ -1,8 +1,8 @@
 ---
 title: "Ghost Decisions: The Engineering Choices AI Makes Without Asking"
 description: "Every time AI generates code, it makes dozens of engineering decisions you didn't ask for. Dependencies, conventions, error handling. You didn't choose them, but you're stuck maintaining them."
-pubDate: "2026-02-25"
-updatedDate: "2026-02-25"
+pubDate: "2026-02-24"
+updatedDate: "2026-02-24"
 author: "Prompt Lúcido"
 tags: ["ai code generation", "ghost decisions", "swe-bench pro", "ai assisted development", "code review ai", "context engineering", "software engineering ai"]
 category: "las-cinco-actividades"
