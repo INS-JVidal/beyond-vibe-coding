@@ -1,14 +1,14 @@
 ---
 title: "Decisiones fantasma: las elecciones que la IA toma sin consultarte"
 description: "Cada vez que la IA genera código, toma docenas de decisiones de ingeniería que no pediste. Dependencias, convenciones, manejo de errores. Tú no las elegiste, pero mantenerlas te toca a ti."
-pubDate: "2026-02-25"
-updatedDate: "2026-02-25"
+pubDate: "2026-02-24"
+updatedDate: "2026-02-24"
 author: "Prompt Lúcido"
 tags: ["programar con ia", "generación de código", "decisiones fantasma", "swe-bench pro", "ingeniería de software con ia", "code review ia", "context engineering"]
 category: "las-cinco-actividades"
 series: "Las cinco actividades"
 seriesOrder: 4
-draft: true
+draft: false
 lang: "es"
 image:
   src: "/images/blog/decisiones-fantasma-ia.svg"
