@@ -8,7 +8,7 @@ tags: ["ai code generation", "ghost decisions", "swe-bench pro", "ai assisted de
 category: "las-cinco-actividades"
 series: "The Five Activities"
 seriesOrder: 4
-draft: true
+draft: false
 lang: "en"
 image:
   src: "/images/blog/decisiones-fantasma-ia.svg"
