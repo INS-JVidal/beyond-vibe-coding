@@ -8,7 +8,7 @@ tags: ["tests tautológicos", "verificación código ia", "testing ia", "program
 category: "las-cinco-actividades"
 series: "Las cinco actividades"
 seriesOrder: 5
-draft: true
+draft: false
 lang: "es"
 image:
   src: "/images/blog/tests-que-no-prueban-nada.svg"
