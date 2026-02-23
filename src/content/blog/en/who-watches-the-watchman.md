@@ -8,7 +8,7 @@ tags: ["tautological tests", "ai code verification", "ai testing", "ai assisted 
 category: "las-cinco-actividades"
 series: "The Five Activities"
 seriesOrder: 5
-draft: true
+draft: false
 lang: "en"
 image:
   src: "/images/blog/tests-que-no-prueban-nada.svg"
