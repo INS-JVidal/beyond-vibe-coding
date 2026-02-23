@@ -8,7 +8,7 @@ tags: ["prompts", "optimización-tokens", "chatgpt", "claude", "ia", "desarrollo
 category: "fundamentos"
 series: "Trucos"
 seriesOrder: 1
-draft: true
+draft: false
 lang: "es"
 image:
   src: "/images/blog/succinct.svg"
