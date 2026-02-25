@@ -16,7 +16,7 @@ image:
   alt: "Diagrama de dos modelos de IA analizando el mismo código con resultados diferentes"
 readingTime: 9
 translationId: "dual-model-code-review"
-audio: true
+audio: false
 ---
 
 Hay una pregunta que aparece en todos los equipos que usan IA para revisar código: ¿merece la pena el modelo caro? Opus cuesta aproximadamente cinco veces más que Sonnet. Para generar código, la diferencia se nota. Pero para *analizar* código, para encontrar bugs, detectar deuda técnica o señalar fallos de seguridad, ¿pagar más realmente te da mejores resultados?
