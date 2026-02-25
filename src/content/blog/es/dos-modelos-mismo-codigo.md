@@ -30,22 +30,37 @@ El sujeto de análisis es [CI Watcher](https://github.com/opos/watch-gh-actions)
 La herramienta de análisis es un skill personalizado de Claude Code llamado `/code-quality`. Lanza seis agentes en paralelo, cada uno enfocado en una dimensión distinta del código:
 
 ```mermaid
-graph LR
-    subgraph "/code-quality skill"
-        A[Arquitectura]
-        B[Bugs y seguridad]
-        C[Gestión de errores]
-        D[Diseño de tipos]
-        E[Cobertura de tests]
-        F[Comentarios]
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#ffffff',
+  'primaryTextColor': '#333333',
+  'primaryBorderColor': '#5BA4CF',
+  'lineColor': '#90A4AE',
+  'fontSize': '16px'
+}}}%%
+graph TB
+    subgraph skill ["/code-quality skill"]
+        A["Arquitectura"]
+        B["Bugs y seguridad"]
+        C["Gestión de errores"]
+        D["Diseño de tipos"]
+        E["Cobertura de tests"]
+        F["Comentarios"]
     end
 
-    A --> R[Informe unificado]
+    A --> R["Informe unificado"]
     B --> R
     C --> R
     D --> R
     E --> R
     F --> R
+
+    style A fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style B fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style C fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style D fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style E fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style F fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style R fill:#ffffff,stroke:#FFB74D,stroke-width:3px
 ```
 
 Cada agente lee los mismos archivos de forma independiente. Después, un orquestador deduplica y fusiona los hallazgos en un informe priorizado. Piensa en ello como un panel de revisión donde seis especialistas examinan el código y luego un ingeniero senior reconcilia sus notas.
@@ -59,28 +74,40 @@ Necesitaba dos sesiones de análisis completamente independientes ejecutando el 
 La solución fueron los git worktrees. Claude Code tiene un flag `-w` que crea un [worktree](https://git-scm.com/docs/git-worktree), una copia aislada del repositorio con su propio directorio de trabajo y su propia ruta de auto-memory. Combinado con `--no-session-persistence` y `-p` (no interactivo), cada invocación se convierte en un análisis herméticamente sellado:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#ffffff',
+  'primaryTextColor': '#333333',
+  'primaryBorderColor': '#5BA4CF',
+  'lineColor': '#90A4AE',
+  'fontSize': '16px'
+}}}%%
 graph TB
-    subgraph "Repo principal"
+    subgraph repo ["Repo principal"]
         REPO["/home/user/project"]
     end
 
-    subgraph "Worktree A"
-        WT_A[".claude/worktrees/sonnet-run/"]
+    subgraph wta ["Worktree A · Sonnet"]
+        WT_A["sonnet-run/"]
         MEM_A["Memoria separada"]
         S_A["Sesión limpia"]
     end
 
-    subgraph "Worktree B"
-        WT_B[".claude/worktrees/opus-run/"]
+    subgraph wtb ["Worktree B · Opus"]
+        WT_B["opus-run/"]
         MEM_B["Memoria separada"]
         S_B["Sesión limpia"]
     end
 
-    REPO --> |"claude -w sonnet-run"| WT_A
-    REPO --> |"claude -w opus-run"| WT_B
+    REPO -->|"claude -w sonnet-run"| WT_A
+    REPO -->|"claude -w opus-run"| WT_B
 
-    style WT_A fill:#e8f4f8
-    style WT_B fill:#f8e8f4
+    style REPO fill:#ffffff,stroke:#90A4AE,stroke-width:2.5px
+    style WT_A fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style MEM_A fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style S_A fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style WT_B fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
+    style MEM_B fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
+    style S_B fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
 ```
 
 Cada worktree resuelve a una ruta absoluta distinta, así que la auto-memory de Claude Code (que se vincula a la ruta del proyecto) le da a cada modelo un namespace de memoria completamente separado. Sin conversación compartida, sin memoria compartida, sin directorio de trabajo compartido.
@@ -90,25 +117,35 @@ Consideré dos alternativas y las descarté. Usar `/clear` entre ejecuciones res
 El experimento completo cabe en un script de bash de 40 líneas. Se ejecutan ambos modelos en paralelo, y después una tercera sesión de Opus compara los dos informes:
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#ffffff',
+  'primaryTextColor': '#333333',
+  'primaryBorderColor': '#5BA4CF',
+  'lineColor': '#90A4AE',
+  'actorBorder': '#5BA4CF',
+  'actorTextColor': 'inherit',
+  'activationBorderColor': '#90A4AE',
+  'fontSize': '16px'
+}}}%%
 sequenceDiagram
     participant Script as model-compare.sh
-    participant S as Sonnet (worktree A)
-    participant O as Opus (worktree B)
-    participant C as Opus (comparador)
+    participant S as Sonnet<br/>(worktree A)
+    participant O as Opus<br/>(worktree B)
+    participant C as Opus<br/>(comparador)
 
-    Script->>S: claude -w sonnet-run -p --model sonnet "/code-quality"
-    Script->>O: claude -w opus-run -p --model opus "/code-quality"
+    Script->>S: /code-quality
+    Script->>O: /code-quality
 
     par Ejecución en paralelo
-        S->>S: 6 agentes analizan crates/ciw-core
-        O->>O: 6 agentes analizan crates/ciw-core
+        S->>S: 6 agentes analizan ciw-core
+        O->>O: 6 agentes analizan ciw-core
     end
 
-    S-->>Script: results/sonnet.md (64 hallazgos)
-    O-->>Script: results/opus.md (42 hallazgos)
+    S-->>Script: sonnet.md (64 hallazgos)
+    O-->>Script: opus.md (42 hallazgos)
 
     Script->>C: Compara ambos informes
-    C-->>Script: results/comparison.md
+    C-->>Script: comparison.md
 ```
 
 ## Los números
@@ -147,30 +184,41 @@ Aquí emerge el patrón. Los hallazgos únicos de Sonnet se inclinan hacia la co
 Ningún punto ciego es "mejor". Son ortogonales.
 
 ```mermaid
-graph LR
-    subgraph "Solo Sonnet"
-        S1["Bug de pérdida de datos en jobs"]
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#ffffff',
+  'primaryTextColor': '#333333',
+  'primaryBorderColor': '#5BA4CF',
+  'lineColor': '#90A4AE',
+  'fontSize': '16px'
+}}}%%
+graph TB
+    subgraph sonnet ["Solo Sonnet"]
+        S1["Pérdida de datos<br/>en jobs"]
         S2["URL sin validación"]
     end
 
-    subgraph "Ambos modelos (~25 hallazgos)"
-        B1["Poller sin tests (CRITICAL)"]
-        B2["tokio::spawn sin wrapper (HIGH)"]
-        B3["Campos públicos en AppState (HIGH)"]
-        B4["...22 más"]
+    subgraph ambos ["Ambos modelos"]
+        B1["Poller sin tests<br/>(CRITICAL)"]
+        B2["tokio::spawn<br/>sin wrapper (HIGH)"]
+        B3["AppState campos<br/>públicos (HIGH)"]
+        B4["+22 más"]
     end
 
-    subgraph "Solo Opus"
-        O1["Guardas de tamaño ausentes"]
-        O2["CancelRun rechaza runs en cola"]
-        O3["Fallo silencioso en primer poll"]
+    subgraph opus ["Solo Opus"]
+        O1["Guardas de tamaño<br/>ausentes"]
+        O2["CancelRun rechaza<br/>runs en cola"]
+        O3["Fallo silencioso<br/>en primer poll"]
     end
 
-    style S1 fill:#ffeeba
-    style S2 fill:#ffeeba
-    style O1 fill:#d4edda
-    style O2 fill:#d4edda
-    style O3 fill:#d4edda
+    style S1 fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style S2 fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style B1 fill:#ffffff,stroke:#FFB74D,stroke-width:2.5px
+    style B2 fill:#ffffff,stroke:#FFB74D,stroke-width:2.5px
+    style B3 fill:#ffffff,stroke:#FFB74D,stroke-width:2.5px
+    style B4 fill:#ffffff,stroke:#90A4AE,stroke-width:2.5px
+    style O1 fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
+    style O2 fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
+    style O3 fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
 ```
 
 ## La calibración de severidad
@@ -188,17 +236,29 @@ La pregunta obvia es si Opus vale cinco veces más. Para una sola ejecución, no
 Pero esa no es la pregunta correcta. El valor real no está en elegir uno u otro, sino en usar los dos. Cada modelo detecta 2-3 bugs HIGH reales que el otro ignora. La unión de ambos informes es significativamente más fuerte que cualquiera por separado.
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#ffffff',
+  'primaryTextColor': '#333333',
+  'primaryBorderColor': '#5BA4CF',
+  'lineColor': '#90A4AE',
+  'fontSize': '16px'
+}}}%%
 flowchart TD
-    A["Ejecuta análisis con Sonnet<br/>(coste: 1x)"] --> B{"Revisa hallazgos HIGH+"}
-    B --> C["Ejecuta Opus en el mismo scope<br/>(coste: ~5x)"]
+    A["Análisis con Sonnet<br/>(coste: 1x)"] --> B{"Revisa hallazgos<br/>HIGH+"}
+    B --> C["Análisis con Opus<br/>(coste: ~5x)"]
     C --> D{"¿Hallazgos nuevos?"}
-    D -->|"Sí"| E["Añade al issue tracker"]
-    D -->|"No"| F["Sonnet era suficiente"]
-    E --> G["Unión de ambos = mejor cobertura"]
+    D -->|"Sí"| E["Añade al<br/>issue tracker"]
+    D -->|"No"| F["Sonnet era<br/>suficiente"]
+    E --> G["Unión de ambos =<br/>mejor cobertura"]
     F --> G
 
-    style A fill:#e8f4f8
-    style C fill:#f8e8f4
+    style A fill:#ffffff,stroke:#5BA4CF,stroke-width:2.5px
+    style B fill:#ffffff,stroke:#90A4AE,stroke-width:2.5px
+    style C fill:#ffffff,stroke:#CE93D8,stroke-width:2.5px
+    style D fill:#ffffff,stroke:#90A4AE,stroke-width:2.5px
+    style E fill:#ffffff,stroke:#FFB74D,stroke-width:2.5px
+    style F fill:#ffffff,stroke:#90A4AE,stroke-width:2.5px
+    style G fill:#ffffff,stroke:#FFB74D,stroke-width:3px
 ```
 
 Sonnet primero, amplio y barato, para capturar la mayoría de problemas. Opus después, enfocado en el nivel HIGH+ donde su precisión y sus hallazgos únicos justifican el premium. Y la comparación entre ambos como paso final, porque los desacuerdos entre modelos son precisamente donde se esconden los bugs más interesantes.
