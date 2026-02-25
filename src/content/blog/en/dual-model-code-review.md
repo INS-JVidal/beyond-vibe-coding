@@ -189,8 +189,8 @@ But that's the wrong question. The real value isn't in picking one or the other.
 
 ```mermaid
 flowchart TD
-    A["Run Sonnet analysis<br/>(cost: 1x)"] --> B{"Review HIGH+ findings"}
-    B --> C["Run Opus on same scope<br/>(cost: ~5x)"]
+    A["Run Sonnet analysis (cost: 1x)"] --> B{"Review HIGH+ findings"}
+    B --> C["Run Opus on same scope (cost: ~5x)"]
     C --> D{"New findings?"}
     D -->|"Yes"| E["Add to issue tracker"]
     D -->|"No"| F["Sonnet was sufficient"]
