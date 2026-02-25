@@ -67,10 +67,12 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 		<slot />
 	</main>
 	<Footer lang={lang} />
-	<script type="module">
-	import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-	const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-	mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
+	<script is:inline src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+	<script is:inline>
+	if (typeof mermaid !== 'undefined') {
+		var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+		mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default' });
+	}
 	</script>
 </body>
 </html>
