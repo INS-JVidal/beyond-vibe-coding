@@ -16,7 +16,7 @@ image:
   alt: "Diagram showing two AI models analyzing the same code with different results"
 readingTime: 9
 translationId: "dual-model-code-review"
-audio: true
+audio: false
 ---
 
 There's a question that keeps popping up in every team using AI for code review: is the expensive model worth it? Opus costs roughly 5x what Sonnet does. For code generation, you can feel the difference. But for code *analysis*, for catching bugs, spotting architectural debt, and flagging security gaps, does paying more actually surface better findings?
