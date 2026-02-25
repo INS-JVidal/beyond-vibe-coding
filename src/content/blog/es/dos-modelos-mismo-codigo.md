@@ -47,13 +47,13 @@ graph TB
     E --> R
     F --> R
 
-    style A fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style B fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style C fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style D fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style E fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style F fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style R fill:#fff8e1,stroke:#FFB74D,stroke-width:2.5px
+    style A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style B fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style C fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style D fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style E fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style F fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style R fill:#fff,stroke:#e67e22,stroke-width:2.5px,color:#1a1a1a
 ```
 
 Cada agente lee los mismos archivos de forma independiente. Después, un orquestador deduplica y fusiona los hallazgos en un informe priorizado. Piensa en ello como un panel de revisión donde seis especialistas examinan el código y luego un ingeniero senior reconcilia sus notas.
@@ -87,13 +87,13 @@ graph TB
     REPO -->|"claude -w sonnet-run"| WT_A
     REPO -->|"claude -w opus-run"| WT_B
 
-    style REPO fill:#f5f5f5,stroke:#90A4AE,stroke-width:2px
-    style WT_A fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style MEM_A fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style S_A fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style WT_B fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
-    style MEM_B fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
-    style S_B fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
+    style REPO fill:#fff,stroke:#546e7a,stroke-width:2px,color:#1a1a1a
+    style WT_A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style MEM_A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style S_A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style WT_B fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style MEM_B fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style S_B fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
 ```
 
 Cada worktree resuelve a una ruta absoluta distinta, así que la auto-memory de Claude Code (que se vincula a la ruta del proyecto) le da a cada modelo un namespace de memoria completamente separado. Sin conversación compartida, sin memoria compartida, sin directorio de trabajo compartido.
@@ -179,15 +179,15 @@ graph TB
         O3["Fallo silencioso en primer poll"]
     end
 
-    style S1 fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style S2 fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style B1 fill:#fff8e1,stroke:#FFB74D,stroke-width:2px
-    style B2 fill:#fff8e1,stroke:#FFB74D,stroke-width:2px
-    style B3 fill:#fff8e1,stroke:#FFB74D,stroke-width:2px
-    style B4 fill:#f5f5f5,stroke:#90A4AE,stroke-width:2px
-    style O1 fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
-    style O2 fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
-    style O3 fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
+    style S1 fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style S2 fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style B1 fill:#fff,stroke:#e67e22,stroke-width:2px,color:#1a1a1a
+    style B2 fill:#fff,stroke:#e67e22,stroke-width:2px,color:#1a1a1a
+    style B3 fill:#fff,stroke:#e67e22,stroke-width:2px,color:#1a1a1a
+    style B4 fill:#fff,stroke:#546e7a,stroke-width:2px,color:#1a1a1a
+    style O1 fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style O2 fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style O3 fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
 ```
 
 ## La calibración de severidad
@@ -214,13 +214,13 @@ flowchart TD
     E --> G["Unión de ambos = mejor cobertura"]
     F --> G
 
-    style A fill:#e8f4f8,stroke:#5BA4CF,stroke-width:2px
-    style B fill:#f5f5f5,stroke:#90A4AE,stroke-width:2px
-    style C fill:#f3e5f5,stroke:#CE93D8,stroke-width:2px
-    style D fill:#f5f5f5,stroke:#90A4AE,stroke-width:2px
-    style E fill:#fff8e1,stroke:#FFB74D,stroke-width:2px
-    style F fill:#f5f5f5,stroke:#90A4AE,stroke-width:2px
-    style G fill:#fff8e1,stroke:#FFB74D,stroke-width:2.5px
+    style A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style B fill:#fff,stroke:#546e7a,stroke-width:2px,color:#1a1a1a
+    style C fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style D fill:#fff,stroke:#546e7a,stroke-width:2px,color:#1a1a1a
+    style E fill:#fff,stroke:#e67e22,stroke-width:2px,color:#1a1a1a
+    style F fill:#fff,stroke:#546e7a,stroke-width:2px,color:#1a1a1a
+    style G fill:#fff,stroke:#e67e22,stroke-width:2.5px,color:#1a1a1a
 ```
 
 Sonnet primero, amplio y barato, para capturar la mayoría de problemas. Opus después, enfocado en el nivel HIGH+ donde su precisión y sus hallazgos únicos justifican el premium. Y la comparación entre ambos como paso final, porque los desacuerdos entre modelos son precisamente donde se esconden los bugs más interesantes.

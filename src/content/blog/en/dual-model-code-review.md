@@ -79,8 +79,8 @@ graph TB
     REPO --> |"claude -w sonnet-run"| WT_A
     REPO --> |"claude -w opus-run"| WT_B
 
-    style WT_A fill:#e8f4f8
-    style WT_B fill:#f8e8f4
+    style WT_A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style WT_B fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
 ```
 
 Each worktree resolves to a different absolute path, so Claude Code's auto-memory (which is scoped by project path) gives each model a completely separate memory namespace. No shared conversation, no shared memory, no shared working directory.
@@ -166,11 +166,11 @@ graph LR
         O3["Silent initial poll failure"]
     end
 
-    style S1 fill:#ffeeba
-    style S2 fill:#ffeeba
-    style O1 fill:#d4edda
-    style O2 fill:#d4edda
-    style O3 fill:#d4edda
+    style S1 fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style S2 fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style O1 fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style O2 fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
+    style O3 fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
 ```
 
 ## Severity calibration
@@ -197,8 +197,8 @@ flowchart TD
     E --> G["Union of both = best coverage"]
     F --> G
 
-    style A fill:#e8f4f8
-    style C fill:#f8e8f4
+    style A fill:#fff,stroke:#2980b9,stroke-width:2px,color:#1a1a1a
+    style C fill:#fff,stroke:#8e24aa,stroke-width:2px,color:#1a1a1a
 ```
 
 Sonnet first, broad and cheap, to capture most issues. Opus second, focused on the HIGH+ tier where its precision and unique catches justify the premium. And the comparison between both as a final step, because the disagreements between models are precisely where the most interesting bugs hide.
