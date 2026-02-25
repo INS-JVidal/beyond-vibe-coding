@@ -334,6 +334,35 @@ a:visited {
 }
 
 /* ═══════════════════════════════════════════════════════ */
+/* MERMAID DIAGRAMS                                       */
+/* ═══════════════════════════════════════════════════════ */
+
+/* Hide raw text in <pre> before Mermaid replaces it */
+.prose pre.mermaid {
+	visibility: hidden;
+	height: 0;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	background: transparent;
+}
+
+/* Rendered diagram (Mermaid v11 replaces <pre> with <div>) */
+.prose .mermaid[data-processed="true"],
+.prose div.mermaid {
+	text-align: center;
+	padding: 1.5rem 0;
+	margin: 1.5em 0;
+	overflow-x: auto;
+	background: transparent;
+}
+
+.prose .mermaid svg {
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════ */
 /* MOBILE                                                 */
 /* ═══════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
