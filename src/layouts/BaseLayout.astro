@@ -66,9 +66,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 		script.onload = function() {
 			var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 			mermaid.initialize({
-				startOnLoad: true,
+				startOnLoad: false,
 				theme: isDark ? 'dark' : 'default',
 			});
+			mermaid.run();
 		};
 		document.head.appendChild(script);
 	});
